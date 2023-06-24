@@ -1,26 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import fetchMovies from "../Movies/movies.actions";
-import {nextPage,previousPage} from "../Movies/movies.actions";
-import { handleClick, closeModal, setSelectedCard } from "../MoviesPopUp/popup.actions";
-import MovieDestails from "./MovieDestails";
+import fetchMovies, { nextPage, previousPage } from "../Movies/movies.actions";
+import { closeModal, openModal } from "../MoviesPopUp/popup.actions";
+import MovieDetails from "./MovieDestails";
 
 export default function MoviesHomePage() {
   const dispatch = useDispatch();
   const { data, currentPage } = useSelector(
     ({ moviesReducer }) => moviesReducer
   );
-  const { isModalOpen } = useSelector(({ popupReducer }) => popupReducer);
+  const { selectedCard } = useSelector(({ popupReducer }) => popupReducer);
 
   useEffect(() => {
     dispatch(fetchMovies(currentPage));
   }, [currentPage]);
 
-
-
   const findHighestNumber = (array, property) => {
     return array.reduce((highest, current) => {
-      return current[property] > highest ? parseFloat(current[property].toFixed(1)) : highest;
+      return current[property] > highest
+        ? parseFloat(current[property].toFixed(1))
+        : highest;
     }, 0);
   };
   const highestRateNumber = findHighestNumber(data, "vote_average");
@@ -40,28 +39,23 @@ export default function MoviesHomePage() {
 
   const topMovieName = findHighestNumberTitle(data, "vote_average");
 
-  const handleOpenModal = () => {
-    dispatch(handleClick());
-    setSelectedCard(data);
-    document.body.style.overflowY = 'hidden'
+  const handleOpenModal = (card) => {
+    dispatch(openModal(card));
+    document.body.style.overflowY = "hidden";
   };
-
   const handleCloseModal = (e) => {
     e.stopPropagation();
     dispatch(closeModal());
-    document.body.style.overflowY = 'scroll'
-
+    document.body.style.overflowY = "scroll";
   };
-
   const handleNextPage = () => {
     dispatch(nextPage(currentPage + 1));
   };
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-    dispatch(previousPage(currentPage - 1));
+      dispatch(previousPage(currentPage - 1));
     }
   };
-
 
   return (
     <div>
@@ -76,6 +70,9 @@ export default function MoviesHomePage() {
         </div>
         <div className="movie-cards">
           <div className="row text-center g-0" id="movieCards">
+            {Boolean(selectedCard) && (
+              <MovieDetails handleCloseModal={handleCloseModal} />
+            )}
             {data.map((data) => (
               <div
                 key={data.id}
@@ -84,14 +81,8 @@ export default function MoviesHomePage() {
                 <div
                   className="card single-card mb-3"
                   style={{ width: "220px" }}
-                  onClick={handleOpenModal}
+                  onClick={() => handleOpenModal(data)}
                 >
-                  {isModalOpen && (
-                    <MovieDestails
-                      handleCloseModal={handleCloseModal}
-                      movieData={data}
-                    />
-                  )}
                   <figure>
                     <img
                       src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${data.poster_path}`}
@@ -101,7 +92,9 @@ export default function MoviesHomePage() {
                   </figure>
                   <div className="card-body d-flex flex-column justify-content-between">
                     <h6 className="card-text">{data.title}</h6>
-                    <span className="card-text">{parseFloat(data.vote_average.toFixed(1))}</span>
+                    <span className="card-text">
+                      {parseFloat(data.vote_average.toFixed(1))}
+                    </span>
                   </div>
                 </div>
               </div>
