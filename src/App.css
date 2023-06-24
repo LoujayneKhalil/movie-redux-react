@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+* {
+  font-family: poppins;
+}
+
+body {
+  margin: 20px 200px;
+}
+
+.stats {
+  padding: 15px 10px;
+  border: 1px solid grey;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 500;
+}
+.stats h3 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 500;
+}
+.stats h6 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 10px 0;
+}
+
+.movie-cards {
+  padding: 40px 70px;
+}
+
+.single-card .card-img-top {
+  transition: transform 0.4s ease-in-out;
+}
+.single-card:hover .card-img-top {
+  transform: scale(1.1);
+}
+
+.single-card:hover h6 {
+  color: #28666e;
+  font-weight: 700;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.movie-cards h6 {
+  font-size: 20px;
+  padding: 0 10px;
+}
+.movie-cards span {
+  font-size: 16px;
+}
+.movie-cards .card {
+  cursor: pointer;
+}
+
+.turn-page {
+  display: flex;
+  justify-content: center;
+}
+.turn-page button {
+  height: 35px;
+  padding: 0 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+.turn-page button:hover{
+  background-color: #28666e;
+  color: white;
+}
+
+.pop-up {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0 , 0 , 0, 0.06);
+}
+.pop-up .close-btn {
+  position: fixed;
+  top: 100px;
+  right: 370px;
+  color: lightgray;
+  cursor: pointer;
+}
+.pop-up .close-btn:hover {
+  color: dimgray;
+}
+.pop-up .popup-content {
+  margin: auto;
+  height: auto;
+  width: 800px;
+  background-color: white;
+  position: relative;
+  margin-top: 130px;
+}
+.pop-up .popup-content .wrapper {
+  display: flex;
+}
+.pop-up .popup-content .wrapper .popup-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  text-align: start;
+}
