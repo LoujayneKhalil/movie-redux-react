@@ -49,11 +49,11 @@ export default function MoviesHomePage() {
     document.body.style.overflowY = "scroll";
   };
   const handleNextPage = () => {
-    dispatch(nextPage(currentPage + 1));
+    dispatch(nextPage(currentPage));
   };
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      dispatch(previousPage(currentPage - 1));
+      dispatch(previousPage(currentPage));
     }
   };
 
